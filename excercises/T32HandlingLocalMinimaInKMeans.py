@@ -4,8 +4,8 @@ import pandas as pd
 from IPython.display import display
 from ipywidgets import IntProgress
 
+from T31Excercise import k_means
 from excercises.T2Data import plotting
-from excercises.T31KMeans import k_means
 
 
 def empirical_risk(data, clusters, centroids):
@@ -15,7 +15,18 @@ def empirical_risk(data, clusters, centroids):
 
     ### STUDENT TASK ###
     # YOUR CODE HERE
-    raise NotImplementedError()
+
+    N = data.shape[0]
+
+    _sum = 0
+
+    for i in range(0, N):
+        diff = data[i] - centroids[clusters[i]]
+        norm = np.linalg.norm(diff, axis=0)
+        _sum += norm
+
+    risk = _sum / N
+
     return risk
 
 
@@ -38,7 +49,7 @@ def new_k_means(data, k, plot=True):
     # find the best cluster assignment and print the lowest found empirical risk
     min_ind = np.argmin(risk_collection)
     max_ind = np.argmax(risk_collection)
-    if plot == True:
+    if plot:
         print("Cluster division with lowest empirical risk")
         plotting(data, clusters=cluster_collection[min_ind, :])
         print("Cluster division with highest empirical risk")
@@ -52,7 +63,7 @@ def new_k_means(data, k, plot=True):
 
 
 df = pd.read_csv("data.csv")
-data = df.as_matrix()
+data = df.values
 best_cluster, risk = new_k_means(data, 3)
 
 risks = np.zeros(8)

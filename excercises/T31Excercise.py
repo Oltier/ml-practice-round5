@@ -30,7 +30,7 @@ def assign_points(data, centroids):
 
     # YOUR CODE HERE
     ### STUDENT TASK ###
-    for i in range(0, data.shape[0]):
+    for i in range(0, N):
         diff = data[i] - centroids
         norm = np.linalg.norm(diff, axis=1)
         clusters[i] = np.argmin(norm, axis=0)
@@ -108,5 +108,5 @@ new_centroids = move_centroids(data, centroids, clusters)
 # plotting(data, new_centroids, clusters)
 
 # Step 3.4
-centroids, clusters = k_means(data, 2)
-print("The final cluster mean values are:", centroids)
+centroids, clusters = k_means(data, 2, plot=False)
+# print("The final cluster mean values are:", centroids)
