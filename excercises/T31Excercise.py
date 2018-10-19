@@ -24,11 +24,17 @@ def assign_points(data, centroids):
     # INPUT: N x d data array, k x d centroids array.
     # OUTPUT: N x 1 array of cluster assignments in {0,...,k-1}.
 
-    clusters = np.zeros(data.shape[0], dtype=np.int32)
+    N = data.shape[0]
 
-    ### STUDENT TASK ###
+    clusters = np.zeros(N, dtype=np.int32)
+
     # YOUR CODE HERE
-    raise NotImplementedError()
+    ### STUDENT TASK ###
+    for i in range(0, data.shape[0]):
+        diff = data[i] - centroids
+        norm = np.linalg.norm(diff, axis=1)
+        clusters[i] = np.argmin(norm, axis=0)
+
     return clusters
 
 
@@ -48,11 +54,11 @@ data = df.values
 
 # Step 3.1
 centroids = select_centroids(data, 2)
-plotting(data, centroids)
+# plotting(data, centroids)
 
 # Step 3.2
-# clusters = assign_points(data, centroids)
-# plotting(data, centroids, clusters)
+clusters = assign_points(data, centroids)
+plotting(data, centroids, clusters)
 
 
 # Step 3.3

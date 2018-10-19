@@ -47,5 +47,5 @@ def plotting(data, centroids=None, clusters=None):
 
 
 # plot the data
-plotting(data)
+# plotting(data)
 
