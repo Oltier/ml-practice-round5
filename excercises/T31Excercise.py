@@ -42,10 +42,20 @@ def move_centroids(data, old_centroids, clusters):
     # INPUT:  N x d data array, k x d centroids array, N x 1 array of cluster assignments
     # OUTPUT: k x d array of relocated centroids
 
+    N = data.shape[0]
+    k = old_centroids.shape[0]
     new_centroids = np.zeros(old_centroids.shape)
     ### STUDENT TASK ###
     # YOUR CODE HERE
-    raise NotImplementedError()
+
+    for i in range(0, k):
+        point_ids_in_cluster = np.where(clusters == i)[0]
+        if len(point_ids_in_cluster) == 0:
+            new_centroids[i] = old_centroids[i]
+        else:
+            points_in_cluster = data[point_ids_in_cluster]
+            new_centroids[i] = np.mean(points_in_cluster, axis=0)
+
     return new_centroids
 
 
@@ -58,9 +68,9 @@ centroids = select_centroids(data, 2)
 
 # Step 3.2
 clusters = assign_points(data, centroids)
-plotting(data, centroids, clusters)
+# plotting(data, centroids, clusters)
 
 
 # Step 3.3
-# new_centroids = move_centroids(data, centroids,clusters)
-# plotting(data, new_centroids, clusters)
+new_centroids = move_centroids(data, centroids,clusters)
+plotting(data, new_centroids, clusters)
