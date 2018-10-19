@@ -59,6 +59,38 @@ def move_centroids(data, old_centroids, clusters):
     return new_centroids
 
 
+def k_means(data, k, random_seed=1, num_iters=10, plot=True):
+    # INPUT: N x d data array, k number of clusters, number of iterations, boolean plot.
+    # OUTPUT: N x 1 array of cluster assignments.
+
+    ### STUDENT TASK ###
+    # step 1
+    # centroids = ...
+    # YOUR CODE HERE
+    clusters = np.empty(data.shape[0])
+    centroids = select_centroids(data, k, random_seed)
+
+    # loop for steps 2 and 3
+    for i in range(num_iters):
+        ### STUDENT TASK ###
+        # step 2
+        # clusters = ...
+        # YOUR CODE HERE
+        clusters = assign_points(data, centroids)
+
+        # plotting
+        if plot == True and i < 3:
+            plotting(data, centroids, clusters)
+
+        ### STUDENT TASK ###
+        # step 3
+        # centroids = ...
+        # YOUR CODE HERE
+        centroids = move_centroids(data, centroids, clusters)
+
+    return centroids, clusters
+
+
 df = pd.read_csv("data.csv")
 data = df.values
 
@@ -72,5 +104,9 @@ clusters = assign_points(data, centroids)
 
 
 # Step 3.3
-new_centroids = move_centroids(data, centroids,clusters)
-plotting(data, new_centroids, clusters)
+new_centroids = move_centroids(data, centroids, clusters)
+# plotting(data, new_centroids, clusters)
+
+# Step 3.4
+centroids, clusters = k_means(data, 2)
+print("The final cluster mean values are:", centroids)
